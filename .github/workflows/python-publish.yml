@@ -20,10 +20,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v0.0.1
-          release_name: v0.0.1
+          tag_name: v0.0.1a
+          release_name: v0.0.1a
           body: |
-            First version
+            Adding more seconds to WebDriverWait
           draft: false
           prerelease: false
 
