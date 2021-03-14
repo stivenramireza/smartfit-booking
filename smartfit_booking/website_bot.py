@@ -40,7 +40,7 @@ def login_to_website(driver: object, website_url: str, username: str, password: 
         login_button = driver.find_element_by_class_name('MuiButton-label')
         if login_button.text == 'INGRESAR':
             login_button.click()
-        time.sleep(5)
+        time.sleep(10)
         logger.info('Login to website has been successfully')
     except Exception as error:
         logger.error(f'Error to login to website: {error}')
@@ -48,12 +48,12 @@ def login_to_website(driver: object, website_url: str, username: str, password: 
 
 def answer_questionnaire(driver: object) -> None:
     try:
-        WebDriverWait(driver, 1).until(
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'MuiStepper-horizontal'))
         )
         next_button = driver.find_element_by_class_name('MuiButton-label')
         next_button.click()
-        confirmation_modal = WebDriverWait(driver, 1).until(
+        confirmation_modal = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'MuiDialog-container'))
         )
         confirm_button = confirmation_modal.find_element_by_class_name('MuiButton-containedPrimary')
@@ -67,13 +67,13 @@ def answer_questionnaire(driver: object) -> None:
 
 def search_headquarter(driver: object, headquarter_name: str) -> None:
     try:
-        WebDriverWait(driver, 1).until(
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'MuiCardContent-root'))
         )
         search_field = driver.find_element_by_class_name('MuiInputBase-input')
         search_field.send_keys(headquarter_name)
         search_field.send_keys(Keys.RETURN)
-        headquarter_card = WebDriverWait(driver, 1).until(
+        headquarter_card = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'MuiGrid-item'))
         )
         select_button = headquarter_card.find_element_by_class_name('MuiButton-label')
@@ -93,7 +93,7 @@ def book_hour(driver: object, desire_hour: str) -> None:
         input_date = driver.find_element_by_id('date-local')
         input_date.send_keys(Keys.CONTROL, 'a')
         input_date.send_keys(search_current_date())
-        schedule_table = WebDriverWait(driver, 1).until(
+        schedule_table = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'MuiTable-root'))
         )
         hours = schedule_table.find_elements_by_tag_name('tr')
@@ -140,7 +140,7 @@ def login_to_whatsapp(driver: object, whatsapp_url: str) -> None:
 
 def search_chat(driver: object, chat_name: str) -> None:
     try:
-        search_box = WebDriverWait(driver, 500).until(
+        search_box = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]'))
         )
         search_box.clear()
