@@ -5,12 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from smartfit_booking.formatter import (
-    get_current_date,
-    search_current_date,
-    convert_24_to_12_hour
-)
-
+from smartfit_booking.formatter import convert_24_to_12_hour
 from smartfit_booking.logger import logger
 
 import time
@@ -40,7 +35,7 @@ def login_to_website(driver: object, website_url: str, username: str, password: 
         login_button = driver.find_element_by_class_name('MuiButton-label')
         if login_button.text == 'INGRESAR':
             login_button.click()
-        time.sleep(10)
+        time.sleep(20)
         logger.info('Login to website has been successfully')
     except Exception as error:
         logger.error(f'Error to login to website: {error}')
@@ -88,18 +83,18 @@ def search_headquarter(driver: object, headquarter_name: str) -> None:
         driver.quit()
         raise
 
-def book_hour(driver: object, desire_hour: str) -> None:
+def book_hour(driver: object, desired_date: str, desired_hour: str) -> None:
     try:
         input_date = driver.find_element_by_id('date-local')
         input_date.send_keys(Keys.CONTROL, 'a')
-        input_date.send_keys(search_current_date())
+        input_date.send_keys(''.join(desired_date.split('/')))
         schedule_table = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'MuiTable-root'))
         )
         hours = schedule_table.find_elements_by_tag_name('tr')
         for hour in hours:
             h = hour.find_element_by_class_name('MuiTableCell-root')
-            if h.text == desire_hour:
+            if h.text == desired_hour:
                 book_button = hour.find_element_by_class_name('MuiButton-label')
                 if book_button.text.startswith('RESERVAR'):
                     book_button.click()
@@ -155,13 +150,13 @@ def search_chat(driver: object, chat_name: str) -> None:
         driver.quit()
         raise
 
-def send_message(driver: object, file_path: str, person_name: str, book_hour: str) -> None:
+def send_message(driver: object, file_path: str, person_name: str, book_date: str, book_hour: str) -> None:
     try:
         # Send text
         input_box = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"][@data-tab="6"]'))
         )
-        input_box.send_keys(f'Código QR Reserva hoy {get_current_date()} a las {convert_24_to_12_hour(book_hour)} - {person_name}')
+        input_box.send_keys(f'Código QR Reserva {book_date} a las {convert_24_to_12_hour(book_hour)} - {person_name}')
         input_box.send_keys(Keys.ENTER)
 
         # Attach file
