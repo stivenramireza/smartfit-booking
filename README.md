@@ -16,6 +16,7 @@ Here it's important to know the way to fill the .env files:
 - **IDENTIFICATION**: That's the field of your identification number.
 - **PASSWORD**: That's the password you registered in Smart Fit previously.
 - **HEADQUARTER_NAME**: It's the name of the headquarter, e.g san ignacio.
+- **DESIRED_DATE**: That's the date I want to book, e.g 14/03/2020.
 - **DESIRED_TIME**: It is in 24 hour format, e.g I want to book at 3:00 PM, I must write 15:00.
 - **WHATSAPP_URL**: In this case is https://web.whatsapp.com/.
 - **CHAT_NAME**: It's the name of chat that you want to receive the WhatsApp message.
