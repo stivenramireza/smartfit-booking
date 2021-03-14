@@ -124,6 +124,18 @@ def get_qr_code(driver: object) -> str:
         driver.quit()
         raise
 
+def logout_from_website(driver: object) -> None:
+    try:
+        logout_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@aria-label="logout"]'))
+        )
+        logout_button.click()
+        time.sleep(10)
+        logger.info('Logout from website has been successfully')
+    except Exception as error:
+        logger.error(f'Error to logout from website: {error}')
+        raise
+
 def login_to_whatsapp(driver: object, whatsapp_url: str) -> None:
     try:
         driver.get(whatsapp_url) # Already authenticated
@@ -135,7 +147,7 @@ def login_to_whatsapp(driver: object, whatsapp_url: str) -> None:
 
 def search_chat(driver: object, chat_name: str) -> None:
     try:
-        search_box = WebDriverWait(driver, 10).until(
+        search_box = WebDriverWait(driver, 500).until(
             EC.presence_of_element_located((By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]'))
         )
         search_box.clear()
