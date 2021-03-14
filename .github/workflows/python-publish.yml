@@ -20,10 +20,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v0.0.2
-          release_name: v0.0.2
+          tag_name: v0.0.2a
+          release_name: v0.0.2a
           body: |
-            Adding book_date as parameter
+            Adding DESIRED_DATE as environment variable
           draft: false
           prerelease: false
 
