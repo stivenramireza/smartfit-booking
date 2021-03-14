@@ -5,6 +5,7 @@ from secrets import (
     IDENTIFICATION,
     PASSWORD,
     HEADQUARTER_NAME,
+    DESIRED_DATE,
     DESIRED_TIME,
     WHATSAPP_URL,
     CHAT_NAME,
@@ -15,10 +16,10 @@ from secrets import (
 from smartfit_booking.website_bot import (
     initialize,
     login_to_website,
-    answer_questionnaire,
     search_headquarter,
     book_hour,
     get_qr_code,
+    logout_from_website,
     login_to_whatsapp,
     search_chat,
     send_message
@@ -37,10 +38,10 @@ def main():
     """ book_an_hour """
     driver = initialize(DRIVER_PATH, OUTPUT_PATH, CHROME_PROFILE_PATH)
     login_to_website(driver, WEBSITE_URL, IDENTIFICATION, PASSWORD)
-    answer_questionnaire(driver)
     search_headquarter(driver, HEADQUARTER_NAME)
-    book_hour(driver, DESIRED_TIME)
+    book_hour(driver, DESIRED_DATE, DESIRED_TIME)
     qr_code_url = get_qr_code(driver)
+    logout_from_website(driver)
 
     """ download_qr_code """
     response = get_data(qr_code_url)
@@ -50,7 +51,7 @@ def main():
     """ send_whatsapp_message """
     login_to_whatsapp(driver, WHATSAPP_URL)
     search_chat(driver, CHAT_NAME)
-    send_message(driver, image_path, PERSON_NAME, DESIRED_TIME)
+    send_message(driver, image_path, PERSON_NAME, DESIRED_DATE, DESIRED_TIME)
     remove_file(image_path)
 
 if __name__ == '__main__':
